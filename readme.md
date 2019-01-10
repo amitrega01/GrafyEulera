@@ -4,16 +4,6 @@
 
 # Grafy Eulera - aplikacja
 
-##### GRUPA: 1A / SEMESTR: 5 / ROK: III
-
-
-#### NAZWISKO I IMIĘ
-
-#### 1. Mitręga Adam
-
-#### 2. Suchanek Patrycjusz
-
-#### 3. Ulfig Artur
 
 ## Wstęp teoretyczny
 
