@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script
+      type="text/javascript"
+      src="./node_modules/vis/dist/vis.js"
+    ></script>
+    <link
+      href="./node_modules/vis/dist/vis.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="settings">
+      <div id="header"><span>Graf Eulera</span></div>
+      <form id="genForm">
+        N (liczba wierzchołków)<input type="number" id="count" /><br />
+        P (prawodopodobieństwo)
+        <input id="perc" type="range" min="1" max="100" value="50" /><br />
+        Masa
+        <input
+          id="mass"
+          type="range"
+          min="0.25"
+          max="4"
+          value="1"
+          step="0.25"
+        /><br />
+        Wielkość
+        <input
+          id="size"
+          type="range"
+          min="5"
+          max="50"
+          value="20"
+          step="1"
+        /><br />
+        Pokazuj wierzchołki bez krawędzi
+        <input class="check" type="checkbox" id="showAlone" /><br />
+        Symuluj fizyke
+        <input class="check" type="checkbox" id="physics" checked /><br />
+        <input
+          class="button"
+          type="button"
+          onclick="newGraph()"
+          value="Generuj"
+        />
+      </form>
+      <div>
+        <div id="infoBox"><p id="infoText">Czekam na dane...</p></div>
+      </div>
+    </div>
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript" src="./genarate.js">
+      // create an array with nodes
+    </script>
+  </body>
+</html>
