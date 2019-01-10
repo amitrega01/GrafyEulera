@@ -267,6 +267,7 @@ Przykład dla grafu z **n = 11** i **p=100%**:
 
 Po kliknięciu na dowolny wierzchołek, podświetlone zostają wszystkie jego krawędzie:
 ![](https://i.imgur.com/Q37iNiG.png)
+
 Dodatkowo całość jest interaktywna, możemy przemieszczać wierzchołki które sa pod wpływem symulacji fizycznej, posiadają swoją masę i wielkość którą także możemy modyfikować poprzez interfejs użytkownika.
 
 Graf **n=120 p=2:**
