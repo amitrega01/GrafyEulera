@@ -67,9 +67,8 @@ function Generator(n, p) {
 ```
 Funkcja ​ Generator(n,p) ​ otrzymuje parametry:
 
-    n - ​ liczba wierzchołków grafu
-
-    p - ​ prawdopodobieństwo występowania krawędzi
+* n - ​ liczba wierzchołków grafu
+* p - ​ prawdopodobieństwo występowania krawędzi
 
 Następnie generowana jest pusta macierz w rozmiarze ​ n ​ na ​ n ​ i zostaje wypełniona zerami.
 ```
