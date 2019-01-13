@@ -1,14 +1,16 @@
+let graf = null;
+let edges = null;
+let nodes = null;
+let egdesCount = 0;
 function newGraph() {
   var n = parseInt(document.getElementById("count").value);
   let showAlone = document.getElementById("showAlone").checked;
-  console.log("ShowAlone: " + showAlone);
   var p = parseInt(document.getElementById("perc").value);
-  let graf = this.Generator(n, p);
-  console.log(graf.toString());
+  graf = Generator(n, p);
   let tab = [];
   // create an array with edges
-  let egdesCount = 0;
-  var edges = new vis.DataSet([]);
+  egdesCount = 0;
+  edges = new vis.DataSet([]);
   for (let i = 0; i < graf.length; i++) {
     const row = graf[i];
     for (let j = i; j < row.length; j++) {
@@ -16,17 +18,16 @@ function newGraph() {
 
       if (element == 1) {
         edges.add({
+          id: egdesCount,
           from: i,
           to: j
         });
-
-        tab.push(i);
+        egdesCount++, tab.push(i);
         tab.push(j);
-        egdesCount++;
       }
     }
   }
-  var nodes = new vis.DataSet();
+  nodes = new vis.DataSet();
   for (let i = 0; i < graf.length; i++) {
     const row = graf[i];
     if (!showAlone && tab.includes(i))
@@ -101,7 +102,6 @@ function newGraph() {
       }
     }
   };
-
   // initialize your network!
   var network = new vis.Network(container, data, options);
   let output = "";
@@ -110,11 +110,94 @@ function newGraph() {
 
   output += "\nIlość krawędzi: " + egdesCount + "<br/>";
   graf.forEach(element => {
-    output += "<br />" + element.toString();
+    let deg = 0;
+    element.forEach(i => {
+      deg += i;
+    });
+    output += "<br />" + element.toString() + "\tDEG: " + deg;
   });
   document.getElementById("infoText").innerHTML = output;
+  //aktualizowanie krawiedzi
 }
 
+function SymulujSciezke() {
+  //ukrywanie starych krawedzi
+  for (let i = 0; i < egdesCount; i++) {
+    edges.remove(i);
+  }
+  let tempGraf = graf.slice();
+  let sciezkaEuler = [];
+  let i = tempGraf.length - 1;
+  let j = tempGraf.length - 1;
+  let dalej = 0;
+  let b = true;
+  let limit = tempGraf.length * tempGraf.length;
+  console.log(tempGraf);
+
+  while (b) {
+    if (tempGraf[i][j] == 1 && tempGraf[j][i] == 1) {
+      if (sumRow(tempGraf, j) > 1 || dalej + 1 == egdesCount) {
+        sciezkaEuler.push({
+          id: dalej,
+          from: i,
+          to: j,
+          arrows: "middle"
+        });
+        tempGraf[i][j] = 0;
+        tempGraf[j][i] = 0;
+        dalej++;
+        console.log("Z: " + (i + 1));
+        console.log("Do: " + (j + 1));
+        i = j;
+        j = tempGraf.length - 1;
+        if (dalej == egdesCount) b = false;
+      } else j--;
+    } else {
+      j--;
+    }
+  }
+  let output = "<br/>";
+  sciezkaEuler.forEach(element => {
+    output +=
+      "Z: " +
+      (element.from + 1) +
+      "&nbsp;&nbsp;&nbsp;&nbsp;DO: " +
+      (element.to + 1) +
+      "<br/>";
+  });
+
+  document.getElementById("infoText").innerHTML =
+    document.getElementById("infoText").innerHTML + output;
+  let counter = 0;
+  var interval = setInterval(() => {
+    if (counter <= sciezkaEuler.length - 1)
+      edges.update({
+        id: sciezkaEuler[counter].id,
+        from: sciezkaEuler[counter].from,
+        to: sciezkaEuler[counter++].to,
+        color: { color: "#ff0000" },
+        width: 3
+      });
+    else clearInterval(interval);
+  }, parseInt(document.getElementById("speed").value));
+}
+
+function sum(tab) {
+  let res = 0;
+  for (let i = 0; i < tab.length; i++) {
+    for (let j = 0; j < tab.length; j++) {
+      res += tab[i][j];
+    }
+  }
+  return res;
+}
+function sumRow(tab, i) {
+  let res = 0;
+  for (let j = 0; j < tab.length; j++) {
+    res += tab[i][j];
+  }
+  return res;
+}
 function Generator(n, p) {
   let res = new Array(n);
   for (var i = 0; i < res.length; i++) {
